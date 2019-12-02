@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hangouts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% include ./links.ejs %>
+</head>
+<body>
+    <div class="my-container">
+        <% include ./header.ejs %>
+        <div>
+            <div class="align-top"></div>
+            <div id="content">
+                <!-- Looping through category -->
+               <% if(connections.length != 0){ %>
+                <% categories.forEach(category => { %>
+                <h3><b><u><%= category %></u></b></h3>
+                <br>
+                <% var connsFiltered = connections.filter(function filter(connection) { return connection.category === category}); %>
+                <% let c =0 ; for(var i=0; i < (connsFiltered.length)/3 ; i++) {%> 
+                <div class="row">
+                    <!-- Looping through each connection -->
+                    <% for(let j= 0; j < 3 & c < connsFiltered.length; j++) { %>
+                    
+                    <!-- passing connId as parameter to connection page-->
+                    <a href="/connections?connId=<%= connsFiltered[c].connId %>"> 
+                        <div class="col-md-4">
+                            <div class="event">
+                                <img src = "<%= connsFiltered[c].connImage %>" alt= "<%= connsFiltered[c].title %>" class="img-thumbnail img-rounded">
+                                <div class="event-desc"><p><%= connsFiltered[c].title %></p></div>
+                            </div>
+                        </div>
+                    </a>                    
+                    <% c++;} %>                    
+                </div>
+                <br><br>
+                <% } %>
+                <% }); %>
+              <% } else { %>
+                <%= message %>
+              <% } %>
+            </div>            
+            <div class="align-bottom"></div>
+        </div>
+        <% include ./footer.ejs %>
+    </div>
+</body>
+</html>

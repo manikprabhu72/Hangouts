@@ -1,0 +1,22 @@
+<nav class="my-navbar">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="/"><img class="brand" src="/assets/images/hangouts.jpg" alt="logo"></a>
+        </div>
+        <div class="col-md-8 my-nav-right"> 
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/connections/newConnection">Start a new Connection</a></li>
+                <% if(session.theUser){ %>
+                <li><a href="/profile/savedConnections">My Connections</a></li>
+                <li><a href="/profile/savedConnections?action=signout">Sign Out</a></li>
+                <% }else{ %>
+                <li><a href="/profile/login">Login</a></li>
+                <li><a href="/profile/login">Sign up</a></li>
+                <% } %>
+                
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <% include ./navigation.ejs %>
+</nav>

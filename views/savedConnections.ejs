@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hangouts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% include ./links.ejs %>
+</head>
+<body>
+    <div class="my-container">
+        <% include ./header.ejs %>
+        <div>
+            <div class="align-top"></div>
+            <div id="content">
+                <h2><%= theUser.fName %>'s Connections</h2>
+                <br>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Connection</th>
+                            <th>Category</th>
+                            <th>Going?</th>
+                            <th></th>
+                        </tr>
+                        <% userConns.forEach(userConn => { %>
+                            <tr>
+                                <td><%= userConn.connection.title %></td>
+                                <td><%= userConn.connection.category %></td>
+                                <td><%= userConn.rsvp %></td>
+                                <td class="btn-grp">
+                                    <form method="POST" action="/profile/savedConnections?action=updateProfile&connId=<%= userConn._connection.connId %>"  class="left">
+                                        <input type='hidden' name='viewConnections' value='<%= userConns.map(userConnection => { return userConnection._connection.connId}) %>' >
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </form>
+                                    <form method="POST" action="/profile/savedConnections?action=delete&connId=<%= userConn._connection.connId %>" class="right">
+                                        <input type='hidden' name='viewConnections' value='<%= userConns.map(userConnection => { return userConnection._connection.connId}) %>' >
+                                        <button class="btn btn-primary" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+                    
+            </div>
+            <div class="align-bottom"></div>
+        </div>
+        <% include ./footer.ejs %>
+    </div>
+</body>
+</html>

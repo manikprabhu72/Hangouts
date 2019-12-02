@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hangouts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% include ./links.ejs %>
+</head>
+<body>
+    <div class="my-container">
+        <% include ./header.ejs %>
+        <div>
+            <div class="align-top"></div>
+            <div id="content" class="content-connection">
+                <div class="row" id="event-heading">
+                    <div class="col-md-6">
+                        <p class="text-secondary"> <%= connection.date %> </p>
+                        <h2><%= connection.title %></h2>
+                        <div class="col-md-3" id="host-pic-col">
+                            <img src=<%= host.profPic %> alt="Host Pic" id="host-pic">
+                        </div>
+                        <div class="col-md-6" id="event-details-1">
+                            <p>Hosted by <%= host.fName + ' '+ host.lName %></p>
+                            <p><%= connection.time %></p>
+                            <p><%= connection.location %></p>
+                        </div>                            
+                    </div>
+                    <div class="col-md-6">
+                        <form method="POST">
+                            <% let action = '/profile/savedConnections?action=save&connId='+ connection.connId %>
+                            <h3>Are you going?
+                            <span class="text-secondary"><%= connection.noOfPpl %> people coming</span></h3>
+                            <input type='hidden' name='viewConnections' value='<%= connection.connId %>' >
+                            <button type="submit" formaction="<%= action %>&rsvp=yes" class="btn btn-primary btn-lg">Yes</button>
+                            <button type="submit" formaction="<%= action %>&rsvp=no" class="btn btn-primary btn-lg">No</button>
+                            <button type="submit" formaction="<%= action %>&rsvp=maybe" class="btn btn-primary btn-lg">May be</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" id="event-details-2">
+                        <h3>Details</h3>
+                        <%= connection.details %>
+                </div>
+                    
+            </div>
+            <div class="align-bottom"></div>
+        </div>
+        <% include ./footer.ejs %>
+    </div>
+</body>
+</html>
