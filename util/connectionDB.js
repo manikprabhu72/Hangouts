@@ -38,6 +38,15 @@ db.once('open', function(){
     connectionDB.addConnection = function(connection){
         return connectionModel.create(connection);
     }
+
+    connectionDB.updateConnection = function(connecId,heading,description,dte,place){
+        let updatedConnection = {title: heading,details: description,date: dte, location: place }
+        return connectionModel.updateOne({connId:connecId}, updatedConnection ,{upsert: false, new: true, runValidators: true});
+    }
+
+    connectionDB.removeConnection = function(connecId){
+        return connectionModel.deleteOne({connId:connecId});
+    }
 });
 
 module.exports = connectionDB;

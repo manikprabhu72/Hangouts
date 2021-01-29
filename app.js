@@ -2,7 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/hangouts');
+mongoose.connect('mongodb+srv://admin:admin@ssdi.3okay.mongodb.net/hangouts?retryWrites=true&w=majority');
 
 app.use(session({
     'secret': 'abcdefgh'

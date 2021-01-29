@@ -9,7 +9,7 @@ db.once('open', function(){
     let userSchema = new Schema({        
         uId: {
             type: Number,
-            required: 'Connection Id is Required!'
+            required: 'User Id is Required!'
         },
         fName: String,
         lName: String,
@@ -29,6 +29,9 @@ db.once('open', function(){
     }
     userDB.getUserById = function(userId){
         return userModel.findOne({uId: userId}).exec();
+    }
+    userDB.addUser = function(user){
+        return userModel.create(user);
     }
 });
 

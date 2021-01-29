@@ -7,6 +7,7 @@ var router = express.Router();
 var connections = [];
 var categories;
 
+//route for creating a new connection
 router.get('/newConnection', function(req,res){
     //if user logged in redirect to new connection page else do the login and show savedConnections
     if(req.session.theUser){
@@ -16,6 +17,7 @@ router.get('/newConnection', function(req,res){
     }
 });
 
+//middleware for connections and connection route
 router.use('/', function(req,res,next){
     if(Object.keys(connectionDB).length === 0){
         console.log('Error Connecting to MongoDB');
@@ -34,6 +36,7 @@ router.use('/', function(req,res,next){
     
 });
 
+//route for get connections and connection.
 router.get('/',function(req, res){
     var query = req.query;
     // if query not null and have a valid connectionId param render connection view otherwiese render connections view
@@ -67,6 +70,8 @@ router.post('/',function(req,res){
     res.render('connections',{connections: connections, categories: categories});
 });
 
+
+//function to validate the connectionID
 var validateConnId = function(connId){
     var result = false;
     // connection Id should start with HO (as in my app name Hangouts) and followed 4 numbers.

@@ -15,7 +15,8 @@ var getSaltPassAndSalt  = function(salt, password){
 };
 
 module.exports = {
-    getSaltPassAndSalt: getSaltPassAndSalt
+    getSaltPassAndSalt: getSaltPassAndSalt,
+    getSalt: getSalt
 };
 
 getSaltPassAndSalt(getSalt(),'pass@123');

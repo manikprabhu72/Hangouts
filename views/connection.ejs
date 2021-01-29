@@ -8,7 +8,7 @@
 <body>
     <div class="my-container">
         <% include ./header.ejs %>
-        <div>
+        <div id="content-holder">
             <div class="align-top"></div>
             <div id="content" class="content-connection">
                 <div class="row" id="event-heading">
@@ -25,6 +25,7 @@
                         </div>                            
                     </div>
                     <div class="col-md-6">
+                        <div class="row" >
                         <form method="POST">
                             <% let action = '/profile/savedConnections?action=save&connId='+ connection.connId %>
                             <h3>Are you going?
@@ -34,6 +35,19 @@
                             <button type="submit" formaction="<%= action %>&rsvp=no" class="btn btn-primary btn-lg">No</button>
                             <button type="submit" formaction="<%= action %>&rsvp=maybe" class="btn btn-primary btn-lg">May be</button>
                         </form>
+                        </div>
+                        <% if(session.theUser && session.theUser.uId == host.uId) { %>
+                        <div class="row" >
+                            <form method="POST">
+                                 <% let action = '/profile/connection?connId='+ connection.connId %>                                
+                                <input type='hidden' name='viewConnections' value='<%= connection.connId %>' >
+                                <button type="submit" formaction="<%= action %>&action=edit" class="btn btn-primary btn-lg">Edit Connection</button>
+                                <button type="submit" formaction="<%= action %>&action=delete" class="btn btn-primary btn-lg">Delete Connection</button>                                
+                            </form>
+                        </div>
+                        <% } %>
+                       
+                        
                     </div>
                 </div>
                 <div class="row" id="event-details-2">

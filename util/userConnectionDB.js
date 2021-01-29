@@ -25,11 +25,20 @@ db.once('open', function(){
         return userProfilesModel.findOne({uId: userId}).exec();
     };
     userConnectionDB.addRSVP = function(connectionID, userID, rsvp_arg){
-        return userProfilesModel.findOne({uId: userID}).then(function(userProfile){
-            let userConns = userProfile.userConnections;
-            userConns.push({connId: connectionID, rsvp: rsvp_arg});
-            userProfile.userConnections = userConns;
-            return userProfile.save();
+        return userProfilesModel.findOne({uId: userID}).then(function(userProfile){            
+            if(userProfile){
+                let userConns = userProfile.userConnections;                
+                userConns.push({connId: connectionID, rsvp: rsvp_arg});
+                userProfile.userConnections = userConns;
+                return userProfile.save();
+            }else{
+                let userProf = {};
+                let userConns = [];
+                userProf.uId = userID;
+                userConns.push({connId: connectionID, rsvp: rsvp_arg});
+                userProf.userConnections = userConns;
+                return userProfilesModel.create(userProf);
+            }
         });
     };
     userConnectionDB.updateRSVP = function(connectionID,userID, rsvp_arg){
@@ -56,6 +65,20 @@ db.once('open', function(){
     //Logic to add new connection is in connectionDB as it is convenient to execute it there.
     userConnectionDB.addConnection = function(connection){
         return connectionDB.addConnection(connection);
+    }
+
+    userConnectionDB.removeConnsFromProf = function(connectionID){
+        /*return userProfilesModel.find(,function(err, usrProfs){
+            if(err) throw (err);
+            let userProfs = [];
+            userProfs = usrProfs;
+            userProfs.forEach(userProf => {
+                userProf.userConnections.filter(userConn => { return userConn.connId != connectionID })
+            });
+            userProfs.save()
+        })*/
+
+        return userProfilesModel.update({'userConnections.connId':connectionID},{$pull: {userConnections: {connId: connectionID}}},{multi: true})
     }
 });
 

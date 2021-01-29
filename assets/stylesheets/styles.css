@@ -26,6 +26,11 @@ a{
     padding-right: 200px;
     z-index: 1030;
 }
+@media (max-width:992px) {
+    .my-navbar{position:static}
+    body{padding-top: 0 !important}
+
+}
 .nav-text{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -61,7 +66,7 @@ hr{
     height: 10vh;
 }
 .align-bottom{
-    height: 20vh;
+    height: 10vh;
 }
 h1 {
     text-align: center;
